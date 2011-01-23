@@ -130,16 +130,16 @@ namespace TheSeer\fXSL {
          
          $this->setStylesheetProperties($root);
 
-         $frag = $template->createDocumentFragment();
-         $frag->appendXML('<!-- Injected by fXSLCallback - START -->');
+         $frag = $stylesheet->createDocumentFragment();
+         $frag->appendXML("\n<!-- Injected by fXSLCallback - START -->\n");
 
          $rfo = new \ReflectionObject($this->object);
          $methods = $rfo->getMethods(\ReflectionMethod::IS_PUBLIC & ~\ReflectionMethod::IS_STATIC);
          if (!empty($methods)) {
-            $this->registerMethods($frag, $methods);   
+            $this->registerMethods($frag, $key, $methods);   
          }
          
-         $frag->appendXML('<!-- Injected by fXSLCallback - END -->');         
+         $frag->appendXML("\n<!-- Injected by fXSLCallback - END -->\n");         
          $root->appendChild($frag);
       }      
    
@@ -153,11 +153,11 @@ namespace TheSeer\fXSL {
          $node->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:php',  'http://php.net/xsl');
          $node->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:'.$this->prefix, $this->xmlns);
          
-         $eep = explode(' ', $root->getAttribute('extension-element-prefixes'));
+         $eep = explode(' ', $node->getAttribute('extension-element-prefixes'));
          $eep = array_unique(array_merge($eep, array('php','func')));
          $node->setAttribute('extension-element-prefixes', join(' ', $eep));
          
-         $erp = explode(' ', $root->getAttribute('exclude-result-prefixes'));
+         $erp = explode(' ', $node->getAttribute('exclude-result-prefixes'));
          $erp = array_unique(array_merge($erp, array('php','func', $this->prefix)));
          $node->setAttribute('exclude-result-prefixes', join(' ', $erp));      
       }
@@ -165,10 +165,11 @@ namespace TheSeer\fXSL {
       /**
        * Internal helper to register a list of methods as xsl functions  
        * 
-       * @param \DomDocumentFragment $ctx      A DomDocumentFragement to inject the method code into 
+       * @param \DomDocumentFragment $ctx      A DomDocumentFragement to inject the method code into
+       * @param string               $key      The hash of the class instance to refer to 
        * @param Array                $methods  An array of ReflectionMethod object instances to register
        */
-      protected function registerMethods(\DomDocumentFragment $ctx, Array $methods) {
+      protected function registerMethods(\DomDocumentFragment $ctx, $key, Array $methods) {
          $xslPrefix = $ctx->ownerDocument->lookupPrefix('http://www.w3.org/1999/XSL/Transform');
          
          foreach($methods as $m) {
