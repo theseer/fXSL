@@ -40,5 +40,5 @@ $result = $xsl->transformToXml($dom);
 $tpl->formatOutput = true;
 echo "Template:\n" . $tpl->saveXML();
 
-echo "\n\nOutput:\n ".$result;
+echo "\n\nOutput:\n".$result;
 
