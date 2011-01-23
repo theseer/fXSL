@@ -106,6 +106,13 @@ namespace TheSeer\fXSL {
       }
       
       /**
+       * Destructor to cleanup registry       
+       */
+      public function __destruct() {
+         unset(self::$registry[$this->hash]);
+      }
+      
+      /**
        * @see XSLTProcessor::importStylesheet()
        * 
        * Extended version to throw exception on error
@@ -126,9 +133,6 @@ namespace TheSeer\fXSL {
        * Extended version to enforce callability of fXSLProcessor::callbackHook and generally callable methods
        */
       public function registerPHPFunctions($restrict = null) {
-         if ($restrict === null) {
-            parent::registerPHPFunctions();
-         }
          if (is_string($restrict)) {
             $restrict = array($restrict);
          }
