@@ -34,5 +34,11 @@ $test->setObject(new foo());
 
 $xsl->registerCallback($test);
 
-echo $xsl->transformToXml($dom);
+
+$result = $xsl->transformToXml($dom);
+
+$tpl->formatOutput = true;
+echo "Template:\n" . $tpl->saveXML();
+
+echo "\n\nOutput:\n ".$result;
 
