@@ -78,6 +78,20 @@ namespace TheSeer\fXSL {
       protected $object;
       
       /**
+       * List of blacklisted method names
+       * 
+       * @var array
+       */
+      protected $blacklist = NULL;
+      
+      /**
+       * List of whitelisted method names
+       * 
+       * @var array
+       */
+      protected $whitelist = NULL;
+      
+      /**
        * Constructor
        * 
        * @param string $xmlns   The namespace to use
@@ -106,6 +120,24 @@ namespace TheSeer\fXSL {
        */
       public function getObject() {
          return $this->object;
+      }
+      
+      /**
+       * Setter method to define a whitelist of methods that can be called from xsl
+       * 
+       * @param array $methods
+       */
+      public function setWhitelist(array $methods) {
+         $this->whitelist = $methods;
+      }
+      
+      /**
+       * Setter method to define a blacklist of methods that can not be called from xsl
+       * 
+       * @param array $methods
+       */
+      public function setBlacklist(array $methods) {
+         $this->blacklist = $methods;
       }
       
       /**
@@ -173,6 +205,11 @@ namespace TheSeer\fXSL {
          $xslPrefix = $ctx->ownerDocument->lookupPrefix('http://www.w3.org/1999/XSL/Transform');
          
          foreach($methods as $m) {
+            if ( (!empty($this->blacklist) && in_array($m, $this->blacklist)) ||
+                 (!empty($this->whitelist) && !in_array($m, $this->whitelist)) ) {
+               continue;
+            }
+                        
             $xml  = sprintf(
             	'<func:function xmlns:func="http://exslt.org/functions" xmlns:%s="%s" name="%s:%s">',
                 $this->prefix,
