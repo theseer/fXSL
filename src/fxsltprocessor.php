@@ -240,6 +240,9 @@ namespace TheSeer\fXSL {
                $cb->injectCallbackCode($this->stylesheet, $this->hash);
             }        
          }
+         if (libxml_get_last_error()) {
+            throw new fXSLTProcessorException('Error registering callbacks', fXSLTProcessorException::ImportFailed);
+         }
          parent::importStylesheet($this->stylesheet);
          if (libxml_get_last_error()) {
             throw new fXSLTProcessorException('Error while importing given stylesheet', fXSLTProcessorException::ImportFailed);
