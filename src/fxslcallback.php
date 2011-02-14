@@ -205,8 +205,8 @@ namespace TheSeer\fXSL {
          $xslPrefix = $ctx->ownerDocument->lookupPrefix('http://www.w3.org/1999/XSL/Transform');
          
          foreach($methods as $m) {
-            if ( (!empty($this->blacklist) && in_array($m, $this->blacklist)) ||
-                 (!empty($this->whitelist) && !in_array($m, $this->whitelist)) ) {
+            if ( (!empty($this->blacklist) && in_array($m->getName(), $this->blacklist)) ||
+                 (!empty($this->whitelist) && !in_array($m->getName(), $this->whitelist)) ) {
                continue;
             }
                         
