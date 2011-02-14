@@ -187,11 +187,11 @@ namespace TheSeer\fXSL {
          
          $eep = explode(' ', $node->getAttribute('extension-element-prefixes'));
          $eep = array_unique(array_merge($eep, array('php','func')));
-         $node->setAttribute('extension-element-prefixes', join(' ', $eep));
+         $node->setAttribute('extension-element-prefixes', trim(join(' ', $eep)));
          
          $erp = explode(' ', $node->getAttribute('exclude-result-prefixes'));
          $erp = array_unique(array_merge($erp, array('php','func', $this->prefix)));
-         $node->setAttribute('exclude-result-prefixes', join(' ', $erp));      
+         $node->setAttribute('exclude-result-prefixes', trim(join(' ', $erp)));      
       }
       
       /**
@@ -221,7 +221,7 @@ namespace TheSeer\fXSL {
             $payload = array();
             foreach($m->getParameters() as $p) {
                // TODO: Check the type and bail out if it's not possible to provide it from xsl context
-               $xml .= sprintf('<%s:param name="%s" />', $xslPrefix, $p->getName());
+               $xml .= sprintf('<%s:param xmlns:%s="http://www.w3.org/1999/XSL/Transform" name="%s" />', $xslPrefix, $xslPrefix, $p->getName());
                
                // TODO: Add string() wrapper if needed
                $payload[] = '$' . $p->getName();    
