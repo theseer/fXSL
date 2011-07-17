@@ -261,10 +261,11 @@ namespace TheSeer\fXSL {
     */
    class fXSLTProcessorException extends \Exception {
 
-      const WrongNamespace = 1;
-      const ImportFailed   = 2;
-      const NotCallable    = 3;
-      const UnkownInstance = 4;
+      const WrongNamespace       = 1;
+      const ImportFailed         = 2;
+      const NotCallable          = 3;
+      const UnkownInstance       = 4;
+      const TransformationFailed = 5;
 
    }
 
