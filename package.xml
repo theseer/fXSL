@@ -17,9 +17,9 @@
   <email>arne@blankerts.de</email>
   <active>yes</active>
  </lead>
- <date>2011-02-27</date>
+ <date>2011-07-17</date>
  <version>
-  <release>1.0.0</release>
+  <release>1.0.1</release>
   <api>1.0.0</api>
  </version>
  <stability>
