@@ -158,7 +158,7 @@ namespace TheSeer\fXSL {
             }
             libxml_clear_errors();
             $rc = parent::transformToDoc($node);
-            if (libxml_get_last_error()) {
+            if (count(libxml_get_errors())!=0) {
                 throw new fXSLTProcessorException('Error in transformation', fXSLTProcessorException::TransformationFailed);
             }
             return $rc;
@@ -188,7 +188,7 @@ namespace TheSeer\fXSL {
             // for that will break xsl:output as text, as well as omit xml decl
             libxml_clear_errors();
             $rc = parent::transformToXml($doc);
-            if (libxml_get_last_error()) {
+            if (count(libxml_get_errors())!=0) {
                 throw new fXSLTProcessorException('Error in transformation', fXSLTProcessorException::TransformationFailed);
             }
             return $rc;
