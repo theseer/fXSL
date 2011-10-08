@@ -103,6 +103,9 @@ namespace TheSeer\fXSL {
             if ($stylesheet !== null) {
                 $this->importStylesheet($stylesheet);
             }
+            if (method_exists($this,'setSecurityPrefs')) {
+                $this->setSecurityPrefs(XSL_SECPREF_NONE);
+            }
         }
 
         /**
