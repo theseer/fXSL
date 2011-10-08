@@ -112,10 +112,15 @@ Changelog
 * PHP 5.4 compatibilty: set a default security preference so writing files is allowed
 
 #####Release 1.0.3
-* Indenting and typo fixes, minor bugfixes
+* Changed error detecting code to catch more problems
 
 #####Release 1.0.2
-* Bugfix: typehints corrected
+* Extended Exception code to better show actual errors
+
+#####Release 1.0.1
+* Added support for black- and whitelisting of methods
+* Generate nicer xsl code
+* Various Bugfixes
 
 #####Release 1.0.0
 * Initial release
