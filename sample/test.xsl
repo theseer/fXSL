@@ -9,7 +9,7 @@
 	<xsl:template match="/">
 		<root>
 			<demo><xsl:value-of select="php:function('demo')" /></demo>
-			<test><xsl:copy-of select="test:bar()" /></test>
+			<test><xsl:copy-of select="test:bar('hallo','welt')" /></test>
 		</root>
 	</xsl:template>
 

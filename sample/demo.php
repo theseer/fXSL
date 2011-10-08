@@ -11,10 +11,10 @@ function demo() {
 }
 
 class foo {
-   public function bar() {
-      $x = new \DOMDocument();      
+   public function bar($a, $b) {
+      $x = new \DOMDocument();
       $x->loadXML('<?xml version="1.0" ?><root />');
-      $p = $x->createTextNode('Hello world');
+      $p = $x->createTextNode($a . ' -> ' . $b);
       $x->documentElement->appendChild($p);
       return $x->documentElement;
    }
