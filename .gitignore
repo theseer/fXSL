@@ -1,3 +1,6 @@
 .buildpath
 .settings
 .project
+vendor
+composer.lock
+tests/_coverage
