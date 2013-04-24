@@ -1,26 +1,26 @@
 {
-  "name" : "theseer/fxsl", 
-  "description" : "An XSL wrapper and extension to the PHP 5.x XSLTProcessor", 
-  "license" : "BSD-2-Clause", 
+  "name" : "theseer/fxsl",
+  "description" : "An XSL wrapper / extension to the PHP 5.x XSLTProcessor with Exception and extended Callback support",
+  "license" : "BSD-2-Clause",
   "authors" : [
     {
       "name" : "Arne Blankerts",
-      "email" : "arne@blankerts.de", 
+      "email" : "arne@blankerts.de",
       "role" : "Developer"
     }
-  ], 
+  ],
   "require" : {
-    "php" : ">=5.3.3", 
-    "ext-libxml" : "*", 
-    "ext-dom" : "*", 
+    "php" : ">=5.3.3",
+    "ext-libxml" : "*",
+    "ext-dom" : "*",
     "ext-xsl" : "*"
-  }, 
+  },
   "support" : {
     "issues" : "https://github.com/theseer/fXSL/issues"
-  }, 
+  },
   "autoload" : {
     "classmap" : [ "src/" ]
-  }, 
+  },
   "extra" : {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
