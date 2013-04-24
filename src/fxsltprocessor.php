@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2011 Arne Blankerts <arne@blankerts.de>
+ * Copyright (c) 2011-2013 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -69,14 +69,14 @@ namespace TheSeer\fXSL {
          *
          * @var boolean
          */
-        protected $initDone = false;
+        protected $initDone = FALSE;
 
         /**
          * Flag to signal if registerPHPFunctions has been called
          *
          * @var boolean
          */
-        protected $registered = false;
+        protected $registered = FALSE;
 
         /**
          * The given XSL Stylesheet to process
@@ -97,13 +97,13 @@ namespace TheSeer\fXSL {
          *
          * @param DomDocument $stylesheet A DomDocument containing an xslt stylesheet
          */
-        public function __construct(\DomDocument $stylesheet = null) {
+        public function __construct(\DomDocument $stylesheet = NULL) {
             $this->hash = spl_object_hash($this);
-            libxml_use_internal_errors(true);
-            if ($stylesheet !== null) {
+            libxml_use_internal_errors(TRUE);
+            if ($stylesheet !== NULL) {
                 $this->importStylesheet($stylesheet);
             }
-            if (method_exists($this,'setSecurityPrefs')) {
+            if (method_exists($this, 'setSecurityPrefs')) {
                 $this->setSecurityPrefs(XSL_SECPREF_NONE);
             }
         }
@@ -123,8 +123,8 @@ namespace TheSeer\fXSL {
         public function importStylesheet($stylesheet) {
             if ($stylesheet->documentElement->namespaceURI != 'http://www.w3.org/1999/XSL/Transform') {
                 throw new fXSLTProcessorException(
-               "Namespace mismatch: Expected 'http://www.w3.org/1999/XSL/Transform' but '{$stylesheet->documentElement->namespaceURI}' found.",
-                fXSLTProcessorException::WrongNamespace
+                    "Namespace mismatch: Expected 'http://www.w3.org/1999/XSL/Transform' but '{$stylesheet->documentElement->namespaceURI}' found.",
+                    fXSLTProcessorException::WrongNamespace
                 );
             }
             $this->stylesheet = $stylesheet;
@@ -135,7 +135,7 @@ namespace TheSeer\fXSL {
          *
          * Extended version to enforce callability of fXSLProcessor::callbackHook and generally callable methods
          */
-        public function registerPHPFunctions($restrict = null) {
+        public function registerPHPFunctions($restrict = NULL) {
             if (is_string($restrict)) {
                 $restrict = array($restrict);
             }
@@ -147,21 +147,21 @@ namespace TheSeer\fXSL {
                 }
                 $restrict[] = '\TheSeer\fXSL\fXSLTProcessor::callbackHook';
             }
-            $restrict === null ? parent::registerPHPFunctions() : parent::registerPHPFunctions($restrict);
-            $this->registered = true;
+            $restrict === NULL ? parent::registerPHPFunctions() : parent::registerPHPFunctions($restrict);
+            $this->registered = TRUE;
         }
 
         /**
          * @see XSLTProcessor::transformToDoc()
-         * Extended version to throw exception on error
+         *      Extended version to throw exception on error
          */
         public function transformToDoc($node) {
-            if(!$this->initDone) {
+            if (!$this->initDone) {
                 $this->initStylesheet();
             }
             libxml_clear_errors();
             $rc = parent::transformToDoc($node);
-            if (count(libxml_get_errors())!=0) {
+            if (count(libxml_get_errors()) != 0) {
                 throw new fXSLTProcessorException('Error in transformation', fXSLTProcessorException::TransformationFailed);
             }
             return $rc;
@@ -184,14 +184,14 @@ namespace TheSeer\fXSL {
          *
          */
         public function transformToXml($doc) {
-            if(!$this->initDone) {
+            if (!$this->initDone) {
                 $this->initStylesheet();
             }
             // Do not remap this to $this->transformToDoc(..)->saveXML()
             // for that will break xsl:output as text, as well as omit xml decl
             libxml_clear_errors();
             $rc = parent::transformToXml($doc);
-            if (count(libxml_get_errors())!=0) {
+            if (count(libxml_get_errors()) != 0) {
                 throw new fXSLTProcessorException('Error in transformation', fXSLTProcessorException::TransformationFailed);
             }
             return $rc;
@@ -203,7 +203,7 @@ namespace TheSeer\fXSL {
          * @param fXSLCallback $callback The instance of the fXSLCallback to register
          */
         public function registerCallback(fXSLCallback $callback) {
-            $this->initDone = false;
+            $this->initDone = FALSE;
             if (!$this->registered) {
                 $this->registerPHPFunctions();
             }
@@ -227,7 +227,7 @@ namespace TheSeer\fXSL {
          */
         public static function callbackHook($hash, $namespace, $method) {
             $obj = self::$registry[$hash][$namespace]->getObject();
-            $params = array_slice(func_get_args(),3);
+            $params = array_slice(func_get_args(), 3);
             return call_user_func_array(array($obj, $method), $params);
         }
 
@@ -235,11 +235,11 @@ namespace TheSeer\fXSL {
          * Internal helper to do the template initialisation and injection of registered objects
          */
         protected function initStylesheet() {
-            $this->initDone = true;
+            $this->initDone = TRUE;
             libxml_clear_errors();
 
             if (isset(self::$registry[$this->hash])) {
-                foreach(self::$registry[$this->hash] as $cb) {
+                foreach (self::$registry[$this->hash] as $cb) {
                     $cb->injectCallbackCode($this->stylesheet, $this->hash);
                 }
             }
@@ -253,7 +253,6 @@ namespace TheSeer\fXSL {
         }
     }
 
-
     /**
      * fXSLTProcessorException
      *
@@ -264,10 +263,14 @@ namespace TheSeer\fXSL {
      */
     class fXSLTProcessorException extends \Exception {
 
-        const WrongNamespace       = 1;
-        const ImportFailed         = 2;
-        const NotCallable          = 3;
-        const UnkownInstance       = 4;
+        const WrongNamespace = 1;
+
+        const ImportFailed = 2;
+
+        const NotCallable = 3;
+
+        const UnkownInstance = 4;
+
         const TransformationFailed = 5;
 
         public function __construct($message, $code) {
@@ -277,15 +280,17 @@ namespace TheSeer\fXSL {
             $message .= "\n\n";
             foreach ($errorList as $error) {
                 // hack, skip "attempt to load external pseudo error"
-                if ($error->code=='1543') continue;
+                if ($error->code == '1543') {
+                    continue;
+                }
 
                 if (empty($error->file)) {
                     $message .= '[XML-STRING] ';
                 } else {
-                    $message .= '['.$error->file.'] ';
+                    $message .= '[' . $error->file . '] ';
                 }
 
-                $message .= '[Line: '.$error->line.' - Column: '.$error->column.'] ';
+                $message .= '[Line: ' . $error->line . ' - Column: ' . $error->column . '] ';
 
                 switch ($error->level) {
                     case LIBXML_ERR_WARNING:
@@ -299,7 +304,7 @@ namespace TheSeer\fXSL {
                         break;
                 }
 
-                $message .= str_replace("\n", '', $error->message)."\n";
+                $message .= str_replace("\n", '', $error->message) . "\n";
             }
             parent::__construct($message, $code);
         }
