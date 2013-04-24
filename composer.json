@@ -1,6 +1,6 @@
 {
   "name" : "theseer/fxsl", 
-  "description" : "An experimental XSL wrapper / extension to the PHP 5.x XSLTProcessor", 
+  "description" : "An XSL wrapper and extension to the PHP 5.x XSLTProcessor", 
   "license" : "BSD-2-Clause", 
   "authors" : [
     {
@@ -10,7 +10,7 @@
     }
   ], 
   "require" : {
-    "php" : ">=5.3.0", 
+    "php" : ">=5.3.3", 
     "ext-libxml" : "*", 
     "ext-dom" : "*", 
     "ext-xsl" : "*"

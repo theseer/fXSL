@@ -1,7 +1,7 @@
 fXSL
 ============
 
-The classes contained within this repository extend the standard XSLTProcess to use exceptions at
+The classes contained within this repository extend the standard XSLTProcessor to use exceptions at
 all occasions of errors instead of PHP warnings, notices or semi completed transformations. 
 They also add various custom methods and shortcuts for convinience and to allow a nicer API to implement callbacks
 to the PHP stack.
