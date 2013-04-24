@@ -1,6 +1,6 @@
 .buildpath
 .settings
 .project
+build
 vendor
 composer.lock
-tests/_coverage
