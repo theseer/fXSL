@@ -20,7 +20,8 @@ class fxsltprocessorTest extends \PHPUnit_Framework_TestCase {
 
         $result = $xsl->transformToXml($dom);
 
-        $testDoc = \DOMDocument::loadXML($result);
+        $testDoc = new \DOMDocument();
+        $testDoc->loadXML($result);
         $testXPath = new \DOMXPath($testDoc);
 
         $demos = $testXPath->evaluate("/root/demo");
