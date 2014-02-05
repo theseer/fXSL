@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2011-2013 Arne Blankerts <arne@blankerts.de>
+ * Copyright (c) 2011-2014 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -62,40 +62,40 @@ namespace TheSeer\fXSL {
          *
          * @var array
          */
-        protected static $registry = array();
+        private static $registry = array();
 
         /**
          * Flag to signal if initStyleSheet has been called
          *
          * @var boolean
          */
-        protected $initDone = FALSE;
+        private $initDone = FALSE;
 
         /**
          * Flag to signal if registerPHPFunctions has been called
          *
          * @var boolean
          */
-        protected $registered = FALSE;
+        private $registered = FALSE;
 
         /**
          * The given XSL Stylesheet to process
          *
-         * @var DOMDocument
+         * @var \DOMDocument
          */
-        protected $stylesheet;
+        private $stylesheet;
 
         /**
          * The spl_object_hash of the current instance
          *
          * @var string
          */
-        protected $hash;
+        private $hash;
 
         /**
          * Constructor, allowing to directly inject a Stylesheet for later processing
          *
-         * @param DomDocument $stylesheet A DomDocument containing an xslt stylesheet
+         * @param \DomDocument $stylesheet A DomDocument containing an xslt stylesheet
          */
         public function __construct(\DomDocument $stylesheet = NULL) {
             $this->hash = spl_object_hash($this);
@@ -169,8 +169,7 @@ namespace TheSeer\fXSL {
 
         /**
          * @see XSLTProcessor::transformToUri()
-         *
-         * Extended version to throw exception on erro
+         *      Extended version to throw exception on error
          *
          */
         public function transformToUri($doc, $uri) {
@@ -179,8 +178,7 @@ namespace TheSeer\fXSL {
 
         /**
          * @see XSLTProcessor::transformToXml()
-         *
-         * Extended version to throw exception on erro
+         *      Extended version to throw exception on error
          *
          */
         public function transformToXml($doc) {
@@ -234,7 +232,7 @@ namespace TheSeer\fXSL {
         /**
          * Internal helper to do the template initialisation and injection of registered objects
          */
-        protected function initStylesheet() {
+        private function initStylesheet() {
             $this->initDone = TRUE;
             libxml_clear_errors();
 
@@ -264,13 +262,9 @@ namespace TheSeer\fXSL {
     class fXSLTProcessorException extends \Exception {
 
         const WrongNamespace = 1;
-
         const ImportFailed = 2;
-
         const NotCallable = 3;
-
-        const UnkownInstance = 4;
-
+        const UnknownInstance = 4;
         const TransformationFailed = 5;
 
         public function __construct($message, $code) {

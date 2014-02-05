@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2011-2013 Arne Blankerts <arne@blankerts.de>
+ * Copyright (c) 2011-2014 Arne Blankerts <arne@blankerts.de>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -61,35 +61,35 @@ namespace TheSeer\fXSL {
          *
          * @var string
          */
-        protected $xmlns;
+        private $xmlns;
 
         /**
          * The prefix used for mapping the xsl function calls
          *
          * @var string
          */
-        protected $prefix;
+        private $prefix;
 
         /**
          * The registerd instance of the wrapped class
          *
          * @var object
          */
-        protected $object;
+        private $object;
 
         /**
          * List of blacklisted method names
          *
          * @var array
          */
-        protected $blacklist = NULL;
+        private $blacklist = NULL;
 
         /**
          * List of whitelisted method names
          *
          * @var array
          */
-        protected $whitelist = NULL;
+        private $whitelist = NULL;
 
         /**
          * Constructor
@@ -178,9 +178,9 @@ namespace TheSeer\fXSL {
         /**
          * Internal helper to set the needed attributes on the xsl:stylesheet node
          *
-         * @param \DomNode $node
+         * @param \DOMElement $node
          */
-        protected function setStylesheetProperties(\DomNode $node) {
+        private function setStylesheetProperties(\DOMElement $node) {
             $node->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:func', 'http://exslt.org/functions');
             $node->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:php', 'http://php.net/xsl');
             $node->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:' . $this->prefix, $this->xmlns);
@@ -201,10 +201,11 @@ namespace TheSeer\fXSL {
          * @param string               $key      The hash of the class instance to refer to
          * @param Array                $methods  An array of ReflectionMethod object instances to register
          */
-        protected function registerMethods(\DomDocumentFragment $ctx, $key, Array $methods) {
+        private function registerMethods(\DomDocumentFragment $ctx, $key, Array $methods) {
             $xslPrefix = $ctx->ownerDocument->lookupPrefix('http://www.w3.org/1999/XSL/Transform');
 
             foreach ($methods as $m) {
+                /** @var \ReflectionMethod $m */
                 if ((!empty($this->blacklist) && in_array($m->getName(), $this->blacklist)) ||
                     (!empty($this->whitelist) && !in_array($m->getName(), $this->whitelist))
                 ) {
