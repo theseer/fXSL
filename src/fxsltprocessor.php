@@ -121,9 +121,23 @@ namespace TheSeer\fXSL {
          *
          * @param string $filename  Filename to load as stylesheet
          */
-        public function loadStylesheet($filename) {
+        public function loadStylesheetFromFile($filename) {
             $dom = new \DOMDocument();
             $dom->load($filename);
+            if (count(libxml_get_errors()) != 0) {
+                throw new fXSLTProcessorException('Error loading stylesheet', fXSLTProcessorException::ImportFailed);
+            }
+            $this->importStylesheet($dom);
+        }
+
+        /**
+         * Load a Stylesheet from xml string and import it
+         *
+         * @param string $xml XML string of stylesheet
+         */
+        public function loadStylesheetFromXML($xml) {
+            $dom = new \DOMDocument();
+            $dom->loadXML($xml);
             if (count(libxml_get_errors()) != 0) {
                 throw new fXSLTProcessorException('Error loading stylesheet', fXSLTProcessorException::ImportFailed);
             }

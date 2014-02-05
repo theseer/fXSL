@@ -8,19 +8,28 @@ class fxsltprocessorTest extends \PHPUnit_Framework_TestCase {
         $dom = new \DOMDocument();
 
         $xsl = new fXSLTProcessor();
-        $xsl->loadStylesheet(__DIR__ . '/_data/basic.xsl');
+        $xsl->loadStylesheetFromFile(__DIR__ . '/_data/basic.xsl');
 
         $res = $xsl->transformToDoc($dom);
         $this->assertEquals('test', $res->documentElement->nodeName);
     }
 
+    public function testLoadingStylesheetFromXML() {
+        $dom = new \DOMDocument();
+
+        $xsl = new fXSLTProcessor();
+        $xsl->loadStylesheetFromXML( file_get_contents(__DIR__ . '/_data/basic.xsl'));
+
+        $res = $xsl->transformToDoc($dom);
+        $this->assertEquals('test', $res->documentElement->nodeName);
+    }
 
     /**
      * @expectedException \TheSeer\fXSL\fXSLTProcessorException
      */
     public function testLoadingInvalidStylesheetFromFileThrowsException() {
         $xsl = new fXSLTProcessor();
-        $xsl->loadStylesheet(__DIR__ . '/_data/broken.xsl');
+        $xsl->loadStylesheetFromFile(__DIR__ . '/_data/broken.xsl');
     }
 
     public function testTransform() {
