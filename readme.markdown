@@ -108,6 +108,11 @@ The 'test.xsl' XSL Stylesheet used:
  
 Changelog
 ---------
+#####Release 1.1.0
+* Added loadStylesheetFromFile and loadStylesheetFromXML methods
+* Clear xml errors on construct
+* Changed protected properties and methods to private
+
 #####Release 1.0.4
 * PHP 5.4 compatibilty: set a default security preference so writing files is allowed
 
