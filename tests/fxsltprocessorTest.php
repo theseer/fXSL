@@ -4,6 +4,25 @@ namespace TheSeer\fXSL;
 
 class fxsltprocessorTest extends \PHPUnit_Framework_TestCase {
 
+    public function testLoadingStylesheetFromFile() {
+        $dom = new \DOMDocument();
+
+        $xsl = new fXSLTProcessor();
+        $xsl->loadStylesheet(__DIR__ . '/_data/basic.xsl');
+
+        $res = $xsl->transformToDoc($dom);
+        $this->assertEquals('test', $res->documentElement->nodeName);
+    }
+
+
+    /**
+     * @expectedException \TheSeer\fXSL\fXSLTProcessorException
+     */
+    public function testLoadingInvalidStylesheetFromFileThrowsException() {
+        $xsl = new fXSLTProcessor();
+        $xsl->loadStylesheet(__DIR__ . '/_data/broken.xsl');
+    }
+
     public function testTransform() {
         $tpl = new \DOMDocument();
         $tpl->load(__DIR__ . '/_data/test.xsl');

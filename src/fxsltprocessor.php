@@ -100,6 +100,7 @@ namespace TheSeer\fXSL {
         public function __construct(\DomDocument $stylesheet = NULL) {
             $this->hash = spl_object_hash($this);
             libxml_use_internal_errors(TRUE);
+            libxml_clear_errors();
             if ($stylesheet !== NULL) {
                 $this->importStylesheet($stylesheet);
             }
@@ -113,6 +114,20 @@ namespace TheSeer\fXSL {
          */
         public function __destruct() {
             unset(self::$registry[$this->hash]);
+        }
+
+        /**
+         * Load a Stylesheet from a file and import it
+         *
+         * @param string $filename  Filename to load as stylesheet
+         */
+        public function loadStylesheet($filename) {
+            $dom = new \DOMDocument();
+            $dom->load($filename);
+            if (count(libxml_get_errors()) != 0) {
+                throw new fXSLTProcessorException('Error loading stylesheet', fXSLTProcessorException::ImportFailed);
+            }
+            $this->importStylesheet($dom);
         }
 
         /**
