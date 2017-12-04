@@ -2,7 +2,9 @@
 
 namespace TheSeer\fXSL;
 
-class fXSLCallbackTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class fXSLCallbackTest extends TestCase {
 
     public function testSimple() {
         $object = new \stdClass();

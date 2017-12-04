@@ -2,7 +2,9 @@
 
 namespace TheSeer\fXSL;
 
-class fxsltprocessorTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class fxsltprocessorTest extends TestCase {
 
     public function testLoadingStylesheetFromFile() {
         $dom = new \DOMDocument();
